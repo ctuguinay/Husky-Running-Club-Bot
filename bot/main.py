@@ -16,7 +16,7 @@ async def ping(ctx):
     description="Test Embed", color=0xFF5733)
     file = discord.File("imgs/zoo_loop.png", filename="zoo_loop.png")
     embed.set_thumbnail(url="attachment://zoo_loop.png")
-    await ctx.send(embed=embed)
+    await ctx.send(file=file, embed=embed)
 
 if __name__ == "__main__":
     bot.run(TOKEN)
