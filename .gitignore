@@ -106,3 +106,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# store weekly runs
+/bot/weekly_runs.txt

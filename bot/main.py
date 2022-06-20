@@ -79,13 +79,17 @@ async def ping(ctx):
     weekly_runs = select_weekly_runs()
     f_run = weekly_runs[4]
     friday_run = long_names_converted[f_run]
+    weekly_runs[4] = friday_run
     with open('weekly_runs.txt', 'w') as f:
         for index in range(len(weekly_runs) - 1):
             run = weekly_runs[index].capitalize()
+            if run == "Green_lake":
+                run = "Green Lake"
             if run == "Bridge":
                 run = "520 Bridge"
             f.write(run)
-            weekly_runs[index] == run
+            f.write('\n')
+            weekly_runs[index] = run
     await ctx.send(weekly_runs)
 
 @bot.command(name="daily")
@@ -95,7 +99,7 @@ async def ping(ctx):
     description="Test Embed", color=0xFF5733)
     file = discord.File("imgs/zoo_loop.png", filename="zoo_loop.png")
     embed.set_thumbnail(url="attachment://zoo_loop.png")
-    await ctx.send("daily")
+    await ctx.send(embed, file=file)
 
 if __name__ == "__main__":
     bot.run(TOKEN)
