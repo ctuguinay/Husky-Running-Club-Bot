@@ -1,7 +1,7 @@
 import os
 import discord
 from discord.ext import commands
-import select_weekly_runs from run_selector
+from run_selector import select_weekly_runs
 
 arboretum = {
     3: '//snippets.mapmycdn.com/routes/view/embedded/380811542?width=600&height=400&line_color=E60f0bdb&rgbhex=DB0B0E&distance_markers=0&unit_type=imperial&map_mode=ROADMAP&last_updated=2014-03-29T17:09:05-05:00',
