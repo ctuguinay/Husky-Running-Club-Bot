@@ -8,5 +8,3 @@ def select_weekly_runs():
     thursday_run = random.choice(["arboretum", "interlaken", "laurelhurst"])
     friday_run = random.choice([1, 2, 3, 4])
     return [monday_run, tuesday_run, wednesday_run, thursday_run, friday_run]
-
-print(select_weekly_runs())
