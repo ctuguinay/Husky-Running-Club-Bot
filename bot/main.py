@@ -82,9 +82,6 @@ async def ping(ctx):
     weekly_runs[4] = friday_run
     with open('weekly_runs.txt', 'w') as f:
         for index in range(len(weekly_runs)):
-            run = weekly_runs[index].capitalize()
-            if run == "Green_lake":
-                run = "Green Lake"
             if run == "Bridge":
                 run = "520 Bridge"
             f.write(run)
