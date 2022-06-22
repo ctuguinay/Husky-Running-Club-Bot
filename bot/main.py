@@ -102,7 +102,8 @@ async def ping(ctx):
         index = int(index)
     with open('index.txt', 'w') as f:
         next_index = index + 1
-        f.write("next_index")
+        next_index = str(next_index)
+        f.write(next_index)
     if index < 5:
         with open('weekly_runs.txt', 'r') as f:
             await ctx.send(f.readlines()[index])
