@@ -81,7 +81,7 @@ async def ping(ctx):
     friday_run = long_names_converted[f_run]
     weekly_runs[4] = friday_run
     with open('weekly_runs.txt', 'w') as f:
-        for index in range(len(weekly_runs) - 1):
+        for index in range(len(weekly_runs)):
             run = weekly_runs[index].capitalize()
             if run == "Green_lake":
                 run = "Green Lake"
@@ -97,7 +97,6 @@ async def ping(ctx):
 @bot.command(name="daily")
 @commands.has_role("Officer")
 async def ping(ctx):
-    index = 0
     with open('index.txt', 'r') as f:
         index = f.readlines()[0]
         index = int(index)
