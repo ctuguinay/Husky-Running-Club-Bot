@@ -91,7 +91,7 @@ async def ping(ctx):
             f.write('\n')
             weekly_runs[index] = run
     with open('index.txt', 'w') as f:
-        f.write(0)
+        f.write("0")
     await ctx.send(weekly_runs)
 
 @bot.command(name="daily")
@@ -100,6 +100,7 @@ async def ping(ctx):
     index = 0
     with open('index.txt', 'r') as f:
         index = f.readlines()[0]
+        index = int(index)
     with open('index.txt', 'w') as f:
         f.write(index + 1)
     if index < 5:
@@ -121,7 +122,7 @@ async def ping(ctx):
             await ctx.send(f.readlines()[0])
     except:
         with open('index.txt', 'w') as f:
-            f.write(0)
+            f.write("0")
         with open('index.txt', 'r') as f:
             await ctx.send(f.readlines()[0])
 
