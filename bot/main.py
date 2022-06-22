@@ -53,17 +53,17 @@ long_names = {
 }
 
 long_names_converted = {
-    1: 'Infamous Zoo Loop',
-    2: 'Magnuson Park',
-    3: 'Capitol Hill',
-    4: "Green Lake Zoo Loop"
+    1: 'Capitol Hill',
+    2: 'Green Lake Zoo Loop',
+    3: 'Infamous Zoo Loop',
+    4: 'Magnuson Park'
 }
 
 long_names_converted_reversed = {
-    'Infamous Zoo Loop': 1,
-    'Magnuson Park': 2,
-    'Capitol Hill': 3,
-    'Green Lake Zoo Loop': 4
+    'Capitol Hill': 1,
+    'Green Lake Zoo Loop': 2,
+    'Infamous Zoo Loop': 3,
+    'Magnuson Park': 4
 }
 
 bot = commands.Bot(command_prefix="!")
@@ -90,16 +90,40 @@ async def ping(ctx):
             f.write(run)
             f.write('\n')
             weekly_runs[index] = run
+    with open('index.txt', 'w') as f:
+        f.write(0)
     await ctx.send(weekly_runs)
 
 @bot.command(name="daily")
 @commands.has_role("Officer")
 async def ping(ctx):
-    embed=discord.Embed(title="Green Lake Zoo Loop", url="https://www.mapmyfitness.com/routes/view/embedded/5050970416?width=600&height=400&&line_color=E68006c6&rgbhex=c60680&distance_markers=0&unit_type=imperial&map_mode=ROADMAP&show_marker_every=1&last_updated=undefined'",
-    description="Test Embed", color=0xFF5733)
-    file = discord.File("imgs/long_names/Green_Lake_Zoo_Loop.png", filename="Green_Lake_Zoo_Loop.png")
-    embed.set_thumbnail(url="attachment://Green_Lake_Zoo_Loop.png")
-    await ctx.send(file=file, embed=embed)
+    index = 0
+    with open('index.txt', 'r') as f:
+        index = f.readlines()[0]
+    with open('index.txt', 'w') as f:
+        f.write(index + 1)
+    if index < 5:
+        with open('weekly_runs.txt', 'r') as f:
+            await ctx.send(f.readlines()[index])
+    else:
+        await ctx.send("Error. Only 5 weekdays.")
+    #embed=discord.Embed(title="Green Lake Zoo Loop", url="https://www.mapmyfitness.com/routes/view/embedded/5050970416?width=600&height=400&&line_color=E68006c6&rgbhex=c60680&distance_markers=0&unit_type=imperial&map_mode=ROADMAP&show_marker_every=1&last_updated=undefined'",
+    #description="Test Embed", color=0xFF5733)
+    #file = discord.File("imgs/long_names/Green_Lake_Zoo_Loop.png", filename="Green_Lake_Zoo_Loop.png")
+    #embed.set_thumbnail(url="attachment://Green_Lake_Zoo_Loop.png")
+    #await ctx.send(file=file, embed=embed)
+
+@bot.command(name="index")
+@commands.has_role("Officer")
+async def ping(ctx):
+    try:
+        with open('index.txt', 'r') as f:
+            await ctx.send(f.readlines()[0])
+    except:
+        with open('index.txt', 'w') as f:
+            f.write(0)
+        with open('index.txt', 'r') as f:
+            await ctx.send(f.readlines()[0])
 
 if __name__ == "__main__":
     bot.run(TOKEN)
