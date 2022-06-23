@@ -91,6 +91,7 @@ async def ping(ctx):
     if index < 5:
         with open('weekly_runs.txt', 'r') as f:
             run = f.readlines()[index]
+            run = run.replace("\n", "")
             underscore = run.replace(" ", "_")
             if index != 4:
                 for mile in [3,5,7]:
