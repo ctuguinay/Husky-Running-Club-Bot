@@ -2,6 +2,7 @@ import os
 import discord
 from discord.ext import commands
 from run_selector import select_weekly_runs
+from dotenv import load_dotenv
 
 dict = {
 
@@ -23,7 +24,7 @@ dict = {
         7: '//mapmyfitness.com/routes/view/embedded/5061830644?width=600&height=400&&line_color=E68006c6&rgbhex=c60680&distance_markers=0&unit_type=imperial&map_mode=ROADMAP&show_marker_every=1&last_updated=undefined'
     },
 
-    "Green_Lake": {
+    "Green Lake": {
         3: '//snippets.mapmycdn.com/routes/view/embedded/381215294?width=600&height=400&line_color=E60f0bdb&rgbhex=DB0B0E&distance_markers=0&unit_type=imperial&map_mode=ROADMAP&last_updated=2014-03-29T17:09:05-05:00',
         5: '//snippets.mapmycdn.com/routes/view/embedded/381216728?width=600&height=400&line_color=E60f0bdb&rgbhex=DB0B0E&distance_markers=0&unit_type=imperial&map_mode=ROADMAP&last_updated=2014-03-29T17:09:05-05:00',
         7: '//snippets.mapmycdn.com/routes/view/embedded/381218394?width=600&height=400&line_color=E60f0bdb&rgbhex=DB0B0E&distance_markers=0&unit_type=imperial&map_mode=ROADMAP&last_updated=2014-03-29T17:09:05-05:00'
@@ -48,13 +49,14 @@ dict = {
     }
 }
 
-long_names: {
+long_names = {
     'Capitol Hill': '//snippets.mapmycdn.com/routes/view/embedded/2730969919?width=600&height=400&&line_color=E60f0bdb&rgbhex=DB0B0E&distance_markers=0&unit_type=imperial&map_mode=ROADMAP&last_updated=2019-10-13T21:00:38-07:00',
     'Green Lake Zoo Loop': '//mapmyfitness.com/routes/view/embedded/5050970416?width=600&height=400&&line_color=E68006c6&rgbhex=c60680&distance_markers=0&unit_type=imperial&map_mode=ROADMAP&last_updated=2022-06-13T21:16:51+00:00',
     'Infamous Lake Union Loop': 'https://snippets.mapmycdn.com/routes/view/embedded/1379987599?width=600&height=400&&line_color=E60f0bdb&rgbhex=DB0B0E&distance_markers=0&unit_type=imperial&map_mode=ROADMAP&last_updated=2016-12-06T00:45:07-08:00',
     'Magnuson Park': 'https://snippets.mapmycdn.com/routes/view/embedded/2865761827?width=600&height=400&&line_color=E60f0bdb&rgbhex=DB0B0E&distance_markers=0&unit_type=imperial&map_mode=ROADMAP&last_updated=2020-01-18T18:57:46-08:00'
 }
 
+load_dotenv()
 bot = commands.Bot(command_prefix="!")
 TOKEN = os.getenv("DISCORD_TOKEN")
 
@@ -93,25 +95,43 @@ async def ping(ctx):
             run = f.readlines()[index]
             run = run.replace("\n", "")
             underscore = run.replace(" ", "_")
-            if index != 4:
+            if index != 1 and index != 4:
+                message_one = "**Today's run is " + run + "!**"
+                message_two = "Be at the Quad by 5:00pm"
+                message_three = "Here are links to maps of the different distances we will run:"
+                await ctx.send(message_one)
+                await ctx.send(message_two)
+                await ctx.send(message_three)
                 for mile in [3,5,7]:
                     link = dict[run][3]
                     path_append = "imgs/" + underscore + "/"
-                    path = underscore + ".png"
-                    embed=discord.Embed(title=run, url=link,
-                    description="Map Link for " + run + " " + mile + " route.", color=0xFF5733)
-                    file = discord.File(path + path_append, filename=path)
+                    path = underscore + "_" + str(mile) + ".png"
+                    embed=discord.Embed(title=run, url="https:" + link,
+                    description="Map Link for " + run + " " + str(mile) + " route.", color=0xFF5733)
+                    file = discord.File(path_append + path, filename=path)
                     embed.set_thumbnail(url="attachment://" + path)
                     await ctx.send(file=file, embed=embed)
-            else:
+            elif index == 1:
+                message_one = "**Today is a" + run + " day!**"
+                message_two = "Be at the Quad at 5:30pm. We will jog to Roosevelt from there together."
+                await ctx.send(message_one)
+                await ctx.send(message_two)
+            elif index == 4:
+                message_one = "**Today's long run is " + run + "!**"
+                message_two = "Be at the Quad by 5:00pm."
+                message_three = "Here is the link to the map of the run:"
+                await ctx.send(message_one)
+                await ctx.send(message_two)
+                await ctx.send(message_three)
                 link = long_names[run]
                 path_append = "imgs/long_names/"
                 path = underscore + ".png"
-                embed=discord.Embed(title=run, url=link,
+                embed=discord.Embed(title=run, url="https:" + link,
                 description="Map Link for " + run + " route.", color=0xFF5733)
-                file = discord.File(path + path_append, filename=path)
+                file = discord.File(path_append + path, filename=path)
                 embed.set_thumbnail(url="attachment://" + path)
                 await ctx.send(file=file, embed=embed)
+                await ctx.send("*Note: Since this is a fairly long run, feel free to turn back whenever.*")
 
     else:
         await ctx.send("Error. Only 5 weekdays.")

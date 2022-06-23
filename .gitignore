@@ -109,3 +109,5 @@ venv.bak/
 
 # store weekly runs
 /bot/weekly_runs.txt
+weekly_runs.txt
+index.txt
