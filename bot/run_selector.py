@@ -6,5 +6,5 @@ def select_weekly_runs():
     tuesday_run = "Track"
     wednesday_run = random.choice(["Gasworks", "Bridge"])
     thursday_run = random.choice(["Arboretum", "Interlaken", "Laurelhurst"])
-    friday_run = random.choice([1, 2, 3, 4])
+    friday_run = random.choice(["Capitol Hill", "Green Lake Zoo Loop", "Infamous Lake Union Loop", "Magnuson Park"])
     return [monday_run, tuesday_run, wednesday_run, thursday_run, friday_run]
