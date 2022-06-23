@@ -93,7 +93,7 @@ async def ping(ctx):
             run = f.readlines()[index]
             underscore = run.replace(" ", "_")
             if index != 4:
-                for mile in [3,5,7]
+                for mile in [3,5,7]:
                     link = dict[run][3]
                     path_append = "imgs/" + underscore + "/"
                     path = underscore + ".png"
