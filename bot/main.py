@@ -59,10 +59,10 @@ long_names = {
 #load_dotenv()
 bot = commands.Bot(command_prefix="!")
 TOKEN = os.getenv("DISCORD_TOKEN")
-channel = None
 
 @bot.event
 async def on_ready():
+    print(f"Logged in as {bot.user.name}({bot.user.id})")
     channel = bot.get_channel(990343297329397820)
 
 @bot.command(name="initialize")
