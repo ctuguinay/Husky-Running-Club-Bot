@@ -104,7 +104,7 @@ async def ping(ctx):
                 await ctx.send(message_three)
                 for mile in [3,5,7]:
                     link = dict[run][3]
-                    path_append = "imgs/" + underscore + "/"
+                    path_append = "bot/imgs/" + underscore + "/"
                     path = underscore + "_" + str(mile) + ".png"
                     embed=discord.Embed(title=run, url="https:" + link,
                     description="Map Link for " + run + " " + str(mile) + " route.", color=0xFF5733)
@@ -124,7 +124,7 @@ async def ping(ctx):
                 await ctx.send(message_two)
                 await ctx.send(message_three)
                 link = long_names[run]
-                path_append = "imgs/long_names/"
+                path_append = "bot/imgs/long_names/"
                 path = underscore + ".png"
                 embed=discord.Embed(title=run, url="https:" + link,
                 description="Map Link for " + run + " route.", color=0xFF5733)
