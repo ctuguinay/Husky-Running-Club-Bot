@@ -235,8 +235,8 @@ async def ping(ctx):
                 run = f.readlines()[index]
                 f.write(run)
         await channel.send("Backed up weekly runs.")
-    except:
-        await channel.send("Error. Weekly runs have not been initialized.")
+    #except:
+        #await channel.send("Error. Weekly runs have not been initialized.")
 
 @bot.command(name="use_backup_weekly_runs")
 @commands.has_role("Officer")
