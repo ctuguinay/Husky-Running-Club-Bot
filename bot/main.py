@@ -58,8 +58,8 @@ long_names = {
 
 #load_dotenv()
 bot = commands.Bot(command_prefix="!")
-TOKEN = os.getenv("DISCORD_TOKEN")\
-channel = 0
+TOKEN = os.getenv("DISCORD_TOKEN")
+channel = None
 
 @bot.event
 async def on_ready():
