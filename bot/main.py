@@ -76,36 +76,39 @@ async def ping(ctx):
 @bot.command(name="weekly")
 @commands.has_role("Officer")
 async def ping(ctx):
-    channel = bot.get_channel(990343297329397820)
-    weekly_runs = select_weekly_runs()
-    with open('weekly_runs.txt', 'w') as f:
+    try:
+        channel = bot.get_channel(990343297329397820)
+        weekly_runs = select_weekly_runs()
+        with open('weekly_runs.txt', 'w') as f:
+            for index in range(len(weekly_runs)):
+                run = weekly_runs[index]
+                if run == "Bridge":
+                    run = "520 Bridge"
+                f.write(run)
+                f.write('\n')
+                weekly_runs[index] = run
+        with open('weekday_index.txt', 'w') as f:
+            f.write("0")
+        with open('weekly_index.txt', 'r') as f:
+            weekly_index = f.readlines()[0]
+            weekly_index = int(index)
+        with open('weekly_index.txt', 'w') as f:
+            weekly_next_index = weekly_index + 1
+            weekly_next_index = str(weekly_next_index)
+            f.write(weekly_next_index)
+        await channel.send("**Here is our Week " + weekly_next_index + " Run Schedule:**")
+        weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
         for index in range(len(weekly_runs)):
             run = weekly_runs[index]
-            if run == "Bridge":
-                run = "520 Bridge"
-            f.write(run)
-            f.write('\n')
-            weekly_runs[index] = run
-    with open('weekday_index.txt', 'w') as f:
-        f.write("0")
-    with open('weekly_index.txt', 'r') as f:
-        weekly_index = f.readlines()[0]
-        weekly_index = int(index)
-    with open('weekly_index.txt', 'w') as f:
-        weekly_next_index = weekly_index + 1
-        weekly_next_index = str(weekly_next_index)
-        f.write(weekly_next_index)
-    await channel.send("**Here is our Week " + weekly_next_index + " Run Schedule:**")
-    weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
-    for index in range(len(weekly_runs)):
-        run = weekly_runs[index]
-        weekday = weekdays[index]
-        await channel.send(weekday + ": " + run)
-    embed=discord.Embed(title="Husky Running Club Routes", url="https://dawgs.run/routes/",
-    description="You can view all our routes here.", color=0xFF5733)
-    file = discord.File("bot/imgs/hrc_logo.jpg", filename="hrc_logo.jpg")
-    embed.set_thumbnail(url="attachment://hrc_logo.jpg")
-    await channel.send(file=file, embed=embed)
+            weekday = weekdays[index]
+            await channel.send(weekday + ": " + run)
+        embed=discord.Embed(title="Husky Running Club Routes", url="https://dawgs.run/routes/",
+        description="You can view all our routes here.", color=0xFF5733)
+        file = discord.File("bot/imgs/hrc_logo.jpg", filename="hrc_logo.jpg")
+        embed.set_thumbnail(url="attachment://hrc_logo.jpg")
+        await channel.send(file=file, embed=embed)
+    except:
+        await channel.send("Error. Have not initialized bot for the quarter.")
 
 @bot.command(name="daily")
 @commands.has_role("Officer")
