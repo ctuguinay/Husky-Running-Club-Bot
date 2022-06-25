@@ -227,7 +227,7 @@ async def ping(ctx):
     stored_runs = []
     #try:
     with open('weekly_runs.txt', 'r') as f:
-        for index in range(5):
+        for index in f.readlines():
             print(index)
             run = f.readlines()[index]
             stored_runs.append(run)
