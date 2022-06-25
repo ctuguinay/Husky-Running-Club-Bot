@@ -68,6 +68,7 @@ async def on_ready():
 @bot.command(name="initialize")
 @commands.has_role("Officer")
 async def ping(ctx):
+    channel = bot.get_channel(990343297329397820)
     with open('weekly_index.txt', 'w') as f:
         f.write("1")
     await channel.send("Initialized Quarter.")
@@ -75,6 +76,7 @@ async def ping(ctx):
 @bot.command(name="weekly")
 @commands.has_role("Officer")
 async def ping(ctx):
+    channel = bot.get_channel(990343297329397820)
     weekly_runs = select_weekly_runs()
     with open('weekly_runs.txt', 'w') as f:
         for index in range(len(weekly_runs)):
@@ -103,6 +105,7 @@ async def ping(ctx):
 @bot.command(name="daily")
 @commands.has_role("Officer")
 async def ping(ctx):
+    channel = bot.get_channel(990343297329397820)
     try:
         with open('weekday_index.txt', 'r') as f:
             index = f.readlines()[0]
@@ -162,6 +165,7 @@ async def ping(ctx):
 @bot.command(name="weekly_index")
 @commands.has_role("Officer")
 async def ping(ctx):
+    channel = bot.get_channel(990343297329397820)
     try:
         with open('weekly_index.txt', 'r') as f:
             await channel.send("Weekly Index: " + f.readlines()[0])
@@ -174,6 +178,7 @@ async def ping(ctx):
 @bot.command(name="weekday_index")
 @commands.has_role("Officer")
 async def ping(ctx):
+    channel = bot.get_channel(990343297329397820)
     try:
         with open('weekday_index.txt', 'r') as f:
             await channel.send("Weekday Index: " + f.readlines()[0])
