@@ -95,6 +95,8 @@ async def ping(ctx):
         with open('bot/weekly_index.txt', 'w') as f:
             weekly_next_index = weekly_index + 1
             weekly_next_index = str(weekly_next_index)
+            print(weekly_index)
+            print(weekly_next_index)
             f.write(weekly_next_index)
         await channel.send("**Here is our Week " + weekly_next_index + " Run Schedule:**")
         weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
