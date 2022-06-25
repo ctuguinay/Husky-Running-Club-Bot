@@ -78,7 +78,17 @@ async def ping(ctx):
             weekly_runs[index] = run
     with open('index.txt', 'w') as f:
         f.write("0")
-    await ctx.send(weekly_runs)
+    await ctx.send("**Here is our Week " + "1" + " Run Schedule:**")
+    weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+    for index in range(len(weekly_runs)):
+        run = weekly_runs[index]
+        weekday = weekdays[index]
+        await ctx.send(weekday + ": " + run)
+    embed=discord.Embed(title="Husky Running Club Routes", url="https://dawgs.run/routes/",
+    description="You can view all our routes here.", color=0xFF5733)
+    file = discord.File("bot/imgs/hrc_logo.jpg", filename="hrc_logo.jpg")
+    embed.set_thumbnail(url="attachment://hrc_logo.jpg")
+    await ctx.send(file=file, embed=embed)
 
 @bot.command(name="daily")
 @commands.has_role("Officer")
@@ -112,7 +122,7 @@ async def ping(ctx):
                     embed.set_thumbnail(url="attachment://" + path)
                     await ctx.send(file=file, embed=embed)
             elif index == 1:
-                message_one = "**Today is a" + run + " day!**"
+                message_one = "**Today is a " + run + " day!**"
                 message_two = "Be at the Quad at 5:30pm. We will jog to Roosevelt from there together."
                 await ctx.send(message_one)
                 await ctx.send(message_two)
