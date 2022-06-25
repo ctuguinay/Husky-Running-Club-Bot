@@ -196,6 +196,12 @@ async def ping(ctx):
         with open('weekday_index.txt', 'r') as f:
             await channel.send("Weekday Index: " + f.readlines()[0])
 
+@bot.command(name="set_weekday_index")
+@commands.has_role("Officer")
+async def ping(ctx):
+    channel = bot.get_channel(990343297329397820)
+    await channel.send(ctx.message.content)
+
 if __name__ == "__main__":
     bot.run(TOKEN)
     channel = bot.get_channel(990343297329397820)
