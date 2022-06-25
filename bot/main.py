@@ -171,7 +171,7 @@ async def ping(ctx):
             await channel.send("Weekly Index: " + f.readlines()[0])
     except:
         with open('weekly_index.txt', 'w') as f:
-            f.write("0")
+            f.write("1")
         with open('weekly_index.txt', 'r') as f:
             await channel.send("Weekly Index: " + f.readlines()[0])
 
