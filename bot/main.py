@@ -64,6 +64,13 @@ TOKEN = os.getenv("DISCORD_TOKEN")
 async def on_ready():
     print(f"Logged in as {bot.user.name}({bot.user.id})")
 
+@bot.command(name="initialize")
+@commands.has_role("Officer")
+async def ping(ctx):
+    with open('weekly_index.txt', 'w') as f:
+        f.write("1")
+    await ctx.send("Initialized Quarter.")
+
 @bot.command(name="weekly")
 @commands.has_role("Officer")
 async def ping(ctx):
@@ -76,9 +83,11 @@ async def ping(ctx):
             f.write(run)
             f.write('\n')
             weekly_runs[index] = run
-    with open('index.txt', 'w') as f:
+    with open('weekday_index.txt', 'w') as f:
         f.write("0")
-    await ctx.send("**Here is our Week " + "1" + " Run Schedule:**")
+    with open('weekday_index.txt', 'r') as f:
+        weekday_index = f.readlines()[0]
+    await ctx.send("**Here is our Week " + weekday_index + " Run Schedule:**")
     weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
     for index in range(len(weekly_runs)):
         run = weekly_runs[index]
@@ -93,70 +102,85 @@ async def ping(ctx):
 @bot.command(name="daily")
 @commands.has_role("Officer")
 async def ping(ctx):
-    with open('index.txt', 'r') as f:
-        index = f.readlines()[0]
-        index = int(index)
-    with open('index.txt', 'w') as f:
-        next_index = index + 1
-        next_index = str(next_index)
-        f.write(next_index)
-    if index < 5:
-        with open('weekly_runs.txt', 'r') as f:
-            run = f.readlines()[index]
-            run = run.replace("\n", "")
-            underscore = run.replace(" ", "_")
-            if index != 1 and index != 4:
-                message_one = "**Today's run is " + run + "!**"
-                message_two = "Be at the Quad by 5:00pm"
-                message_three = "Here are links to maps of the different distances we will run:"
-                await ctx.send(message_one)
-                await ctx.send(message_two)
-                await ctx.send(message_three)
-                for mile in [3,5,7]:
-                    link = dict[run][3]
-                    path_append = "bot/imgs/" + underscore + "/"
-                    path = underscore + "_" + str(mile) + ".png"
+    try:
+        with open('weekday_index.txt', 'r') as f:
+            index = f.readlines()[0]
+            index = int(index)
+        with open('weekday_index.txt', 'w') as f:
+            next_index = index + 1
+            next_index = str(next_index)
+            f.write(next_index)
+        if index < 5:
+            with open('weekly_runs.txt', 'r') as f:
+                run = f.readlines()[index]
+                run = run.replace("\n", "")
+                underscore = run.replace(" ", "_")
+                if index != 1 and index != 4:
+                    message_one = "**Today's run is " + run + "!**"
+                    message_two = "Be at the Quad by 5:00pm"
+                    message_three = "Here are links to maps of the different distances we will run:"
+                    await ctx.send(message_one)
+                    await ctx.send(message_two)
+                    await ctx.send(message_three)
+                    for mile in [3,5,7]:
+                        link = dict[run][3]
+                        path_append = "bot/imgs/" + underscore + "/"
+                        path = underscore + "_" + str(mile) + ".png"
+                        embed=discord.Embed(title=run, url="https:" + link,
+                        description="Map Link for " + run + " " + str(mile) + " route.", color=0xFF5733)
+                        file = discord.File(path_append + path, filename=path)
+                        embed.set_thumbnail(url="attachment://" + path)
+                        await ctx.send(file=file, embed=embed)
+                elif index == 1:
+                    message_one = "**Today is a " + run + " day!**"
+                    message_two = "Be at the Quad at 5:30pm. We will jog to Roosevelt from there together."
+                    await ctx.send(message_one)
+                    await ctx.send(message_two)
+                elif index == 4:
+                    message_one = "**Today's long run is " + run + "!**"
+                    message_two = "Be at the Quad by 5:00pm."
+                    message_three = "Here is the link to the map of the run:"
+                    await ctx.send(message_one)
+                    await ctx.send(message_two)
+                    await ctx.send(message_three)
+                    link = long_names[run]
+                    path_append = "bot/imgs/long_names/"
+                    path = underscore + ".png"
                     embed=discord.Embed(title=run, url="https:" + link,
-                    description="Map Link for " + run + " " + str(mile) + " route.", color=0xFF5733)
+                    description="Map Link for " + run + " route.", color=0xFF5733)
                     file = discord.File(path_append + path, filename=path)
                     embed.set_thumbnail(url="attachment://" + path)
                     await ctx.send(file=file, embed=embed)
-            elif index == 1:
-                message_one = "**Today is a " + run + " day!**"
-                message_two = "Be at the Quad at 5:30pm. We will jog to Roosevelt from there together."
-                await ctx.send(message_one)
-                await ctx.send(message_two)
-            elif index == 4:
-                message_one = "**Today's long run is " + run + "!**"
-                message_two = "Be at the Quad by 5:00pm."
-                message_three = "Here is the link to the map of the run:"
-                await ctx.send(message_one)
-                await ctx.send(message_two)
-                await ctx.send(message_three)
-                link = long_names[run]
-                path_append = "bot/imgs/long_names/"
-                path = underscore + ".png"
-                embed=discord.Embed(title=run, url="https:" + link,
-                description="Map Link for " + run + " route.", color=0xFF5733)
-                file = discord.File(path_append + path, filename=path)
-                embed.set_thumbnail(url="attachment://" + path)
-                await ctx.send(file=file, embed=embed)
-                await ctx.send("*Note: Since this is a fairly long run, feel free to turn back whenever.*")
+                    await ctx.send("*Note: Since this is a fairly long run, feel free to turn back whenever.*")
 
-    else:
-        await ctx.send("Error. Only 5 weekdays.")
+        else:
+            await ctx.send("Error. Only 5 weekdays.")
+    except:
+        await ctx.send("Error. Did not set weekly runs.")
 
-@bot.command(name="index")
+@bot.command(name="weekly_index")
 @commands.has_role("Officer")
 async def ping(ctx):
     try:
-        with open('index.txt', 'r') as f:
-            await ctx.send(f.readlines()[0])
+        with open('weekly_index.txt', 'r') as f:
+            await ctx.send("Weekly Index: " + f.readlines()[0])
     except:
-        with open('index.txt', 'w') as f:
+        with open('weekly_index.txt', 'w') as f:
             f.write("0")
-        with open('index.txt', 'r') as f:
-            await ctx.send(f.readlines()[0])
+        with open('weekly_index.txt', 'r') as f:
+            await ctx.send("Weekly Index: " + f.readlines()[0])
+
+@bot.command(name="weekday_index")
+@commands.has_role("Officer")
+async def ping(ctx):
+    try:
+        with open('weekday_index.txt', 'r') as f:
+            await ctx.send("Weekday Index: " + f.readlines()[0])
+    except:
+        with open('weekday_index.txt', 'w') as f:
+            f.write("0")
+        with open('weekday_index.txt', 'r') as f:
+            await ctx.send("Weekday Index: " + f.readlines()[0])
 
 if __name__ == "__main__":
     bot.run(TOKEN)
