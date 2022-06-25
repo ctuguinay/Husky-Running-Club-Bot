@@ -227,12 +227,13 @@ async def ping(ctx):
     stored_runs = []
     #try:
     with open('weekly_runs.txt', 'r') as f:
-        for index in f.readlines():
+        for index in range(len(f.readlines())):
             print(index)
             run = f.readlines()[index]
+            await channel.send(run)
             stored_runs.append(run)
     with open('backup_weekly_runs.txt', 'w') as f:
-        for index in f.readlines():
+        for index in range(len(f.readlines())):
             run = f.readlines()[index]
             f.write(run)
     await channel.send("Backed up weekly runs.")
