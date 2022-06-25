@@ -58,11 +58,12 @@ long_names = {
 
 #load_dotenv()
 bot = commands.Bot(command_prefix="!")
-TOKEN = os.getenv("DISCORD_TOKEN")
+TOKEN = os.getenv("DISCORD_TOKEN")\
+channel = None
 
 @bot.event
 async def on_ready():
-    print(f"Logged in as {bot.user.name}({bot.user.id})")
+    channel = bot.get_channel(990343297329397820)
 
 @bot.command(name="initialize")
 @commands.has_role("Officer")
@@ -184,4 +185,3 @@ async def ping(ctx):
 
 if __name__ == "__main__":
     bot.run(TOKEN)
-    channel = bot.get_channel(990343297329397820)
