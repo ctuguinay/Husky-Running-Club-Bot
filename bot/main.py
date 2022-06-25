@@ -200,7 +200,23 @@ async def ping(ctx):
 @commands.has_role("Officer")
 async def ping(ctx):
     channel = bot.get_channel(990343297329397820)
-    await channel.send(ctx.message.content)
+    try:
+        weekday_index = ctx.message.content.replace("!set_weekday_index ", "")
+        with open('weekday_index.txt', 'w') as f:
+            f.write(weekday_index)
+    except:
+        await channel.send("Error. Try: !set_weekday_index int")
+
+@bot.command(name="set_weekly_index")
+@commands.has_role("Officer")
+async def ping(ctx):
+    channel = bot.get_channel(990343297329397820)
+    try:
+        weekly_index = ctx.message.content.replace("!set_weekly_index ", "")
+        with open('weekly_index.txt', 'w') as f:
+            f.write(weekly_index)
+    except:
+        await channel.send("Error. Try: !set_weekly_index int")
 
 if __name__ == "__main__":
     bot.run(TOKEN)
