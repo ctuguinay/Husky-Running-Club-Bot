@@ -70,7 +70,7 @@ async def on_ready():
 async def ping(ctx):
     channel = bot.get_channel(990343297329397820)
     with open('bot/weekly_index.txt', 'w') as f:
-        f.write("1")
+        f.write("0")
     await channel.send("Initialized Quarter.")
 
 @bot.command(name="weekly")
