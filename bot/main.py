@@ -196,17 +196,6 @@ async def ping(ctx):
         with open('weekday_index.txt', 'r') as f:
             await channel.send("Weekday Index: " + f.readlines()[0])
 
-@bot.command(name="set_weekday_index")
-@commands.has_role("Officer")
-async def ping(ctx):
-    channel = bot.get_channel(990343297329397820)
-    try:
-        weekday_index = ctx.message.content.replace("!set_weekday_index ", "")
-        with open('weekday_index.txt', 'w') as f:
-            f.write(weekday_index)
-    except:
-        await channel.send("Error. Try: !set_weekday_index int")
-
 @bot.command(name="set_weekly_index")
 @commands.has_role("Officer")
 async def ping(ctx):
@@ -215,8 +204,49 @@ async def ping(ctx):
         weekly_index = ctx.message.content.replace("!set_weekly_index ", "")
         with open('weekly_index.txt', 'w') as f:
             f.write(weekly_index)
+            await channel.send("Set weekly index to: " + weekly_index)
     except:
         await channel.send("Error. Try: !set_weekly_index int")
+
+@bot.command(name="set_weekday_index")
+@commands.has_role("Officer")
+async def ping(ctx):
+    channel = bot.get_channel(990343297329397820)
+    try:
+        weekday_index = ctx.message.content.replace("!set_weekday_index ", "")
+        with open('weekday_index.txt', 'w') as f:
+            f.write(weekday_index)
+            await channel.send("Set weekday index to: " + weekday_index)
+    except:
+        await channel.send("Error. Try: !set_weekday_index int")
+
+@bot.command(name="backup_weekly_runs")
+@commands.has_role("Officer")
+    async def ping(ctx):
+        stored_runs = []
+        with open('weekly_runs.txt', 'r') as f:
+            for index in range(5):
+                run = f.readlines()[index]
+                stored_runs.append(run)
+        with open('backup_weekly_runs.txt', 'w') as f:
+            for index in range(5):
+                run = f.readlines()[index]
+                f.write(run)
+        await channel.send("Backed up weekly runs.")
+
+@bot.command(name="use_backup_weekly_runs")
+@commands.has_role("Officer")
+    async def ping(ctx):
+        stored_runs = []
+        with open('backup_weekly_runs.txt', 'r') as f:
+            for index in range(5):
+                run = f.readlines()[index]
+                stored_runs.append(run)
+        with open('weekly_runs.txt', 'w') as f:
+            for index in range(5):
+                run = f.readlines()[index]
+                f.write(run)
+        await channel.send("Using backed up weekly runs.")
 
 if __name__ == "__main__":
     bot.run(TOKEN)
