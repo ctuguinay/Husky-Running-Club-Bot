@@ -111,3 +111,6 @@ venv.bak/
 /bot/weekly_runs.txt
 weekly_runs.txt
 index.txt
+bot/backup_weekly_runs.txt
+weekday_index.txt
+weekly_index.txt

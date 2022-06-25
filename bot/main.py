@@ -69,7 +69,7 @@ async def on_ready():
 @commands.has_role("Officer")
 async def ping(ctx):
     channel = bot.get_channel(990343297329397820)
-    with open('weekly_index.txt', 'w') as f:
+    with open('bot/weekly_index.txt', 'w') as f:
         f.write("1")
     await channel.send("Initialized Quarter.")
 
@@ -79,7 +79,7 @@ async def ping(ctx):
     try:
         channel = bot.get_channel(990343297329397820)
         weekly_runs = select_weekly_runs()
-        with open('weekly_runs.txt', 'w') as f:
+        with open('bot/weekly_runs.txt', 'w') as f:
             for index in range(len(weekly_runs)):
                 run = weekly_runs[index]
                 if run == "Bridge":
@@ -87,12 +87,12 @@ async def ping(ctx):
                 f.write(run)
                 f.write('\n')
                 weekly_runs[index] = run
-        with open('weekday_index.txt', 'w') as f:
+        with open('bot/weekday_index.txt', 'w') as f:
             f.write("0")
-        with open('weekly_index.txt', 'r') as f:
+        with open('bot/weekly_index.txt', 'r') as f:
             weekly_index = f.readlines()[0]
             weekly_index = int(index)
-        with open('weekly_index.txt', 'w') as f:
+        with open('bot/weekly_index.txt', 'w') as f:
             weekly_next_index = weekly_index + 1
             weekly_next_index = str(weekly_next_index)
             f.write(weekly_next_index)
@@ -115,15 +115,15 @@ async def ping(ctx):
 async def ping(ctx):
     channel = bot.get_channel(990343297329397820)
     try:
-        with open('weekday_index.txt', 'r') as f:
+        with open('bot/weekday_index.txt', 'r') as f:
             index = f.readlines()[0]
             index = int(index)
-        with open('weekday_index.txt', 'w') as f:
+        with open('bot/weekday_index.txt', 'w') as f:
             next_index = index + 1
             next_index = str(next_index)
             f.write(next_index)
         if index < 5:
-            with open('weekly_runs.txt', 'r') as f:
+            with open('bot/weekly_runs.txt', 'r') as f:
                 run = f.readlines()[index]
                 run = run.replace("\n", "")
                 underscore = run.replace(" ", "_")
@@ -175,12 +175,12 @@ async def ping(ctx):
 async def ping(ctx):
     channel = bot.get_channel(990343297329397820)
     try:
-        with open('weekly_index.txt', 'r') as f:
+        with open('bot/weekly_index.txt', 'r') as f:
             await channel.send("Weekly Index: " + f.readlines()[0])
     except:
-        with open('weekly_index.txt', 'w') as f:
+        with open('bot/weekly_index.txt', 'w') as f:
             f.write("0")
-        with open('weekly_index.txt', 'r') as f:
+        with open('bot/weekly_index.txt', 'r') as f:
             await channel.send("Weekly Index: " + f.readlines()[0])
 
 @bot.command(name="weekday_index")
@@ -188,12 +188,12 @@ async def ping(ctx):
 async def ping(ctx):
     channel = bot.get_channel(990343297329397820)
     try:
-        with open('weekday_index.txt', 'r') as f:
+        with open('bot/weekday_index.txt', 'r') as f:
             await channel.send("Weekday Index: " + f.readlines()[0])
     except:
-        with open('weekday_index.txt', 'w') as f:
+        with open('bot/weekday_index.txt', 'w') as f:
             f.write("0")
-        with open('weekday_index.txt', 'r') as f:
+        with open('bot/weekday_index.txt', 'r') as f:
             await channel.send("Weekday Index: " + f.readlines()[0])
 
 @bot.command(name="set_weekly_index")
@@ -202,7 +202,7 @@ async def ping(ctx):
     channel = bot.get_channel(990343297329397820)
     try:
         weekly_index = ctx.message.content.replace("!set_weekly_index ", "")
-        with open('weekly_index.txt', 'w') as f:
+        with open('bot/weekly_index.txt', 'w') as f:
             f.write(weekly_index)
             await channel.send("Set weekly index to: " + weekly_index)
     except:
@@ -214,7 +214,7 @@ async def ping(ctx):
     channel = bot.get_channel(990343297329397820)
     try:
         weekday_index = ctx.message.content.replace("!set_weekday_index ", "")
-        with open('weekday_index.txt', 'w') as f:
+        with open('bot/weekday_index.txt', 'w') as f:
             f.write(weekday_index)
             await channel.send("Set weekday index to: " + weekday_index)
     except:
@@ -224,39 +224,27 @@ async def ping(ctx):
 @commands.has_role("Officer")
 async def ping(ctx):
     channel = bot.get_channel(990343297329397820)
-    stored_runs = []
-    #try:
-    with open('weekly_runs.txt', 'r') as f:
-        for index in range(len(f.readlines())):
-            print(index)
-            run = f.readlines()[index]
-            await channel.send(run)
-            stored_runs.append(run)
-    with open('backup_weekly_runs.txt', 'w') as f:
-        for index in range(len(f.readlines())):
-            run = f.readlines()[index]
-            f.write(run)
-    await channel.send("Backed up weekly runs.")
-    #except:
-        #await channel.send("Error. Weekly runs have not been initialized.")
+    try:
+        with open('bot/weekly_runs.txt', 'r') as f, open('bot/backup_weekly_runs.txt', 'w') as w:
+            for index in range(5):
+                run = f.readline()
+                w.write(run)
+        await channel.send("Backed up weekly runs.")
+    except:
+        await channel.send("Error. Weekly runs have not been initialized.")
 
 @bot.command(name="use_backup_weekly_runs")
 @commands.has_role("Officer")
 async def ping(ctx):
     channel = bot.get_channel(990343297329397820)
-    stored_runs = []
     try:
-        with open('backup_weekly_runs.txt', 'r') as f:
+        with open('bot/backup_weekly_runs.txt', 'r') as f, open('bot/weekly_runs.txt', 'w') as w:
             for index in range(5):
-                run = f.readlines()[index]
-                stored_runs.append(run)
-        with open('weekly_runs.txt', 'w') as f:
-            for index in range(5):
-                run = f.readlines()[index]
-                f.write(run)
-        await channel.send("Using backed up weekly runs.")
+                run = f.readline()
+                w.write(run)
+        await channel.send("Using backedup weekly runs.")
     except:
-        await channel.send("Error. Weekly runs have not been initialized.")
+        await channel.send("Error. Backup weekly runs have not been initialized.")
 
 if __name__ == "__main__":
     bot.run(TOKEN)
