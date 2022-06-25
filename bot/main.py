@@ -90,7 +90,12 @@ async def ping(ctx):
         f.write("0")
     with open('weekly_index.txt', 'r') as f:
         weekly_index = f.readlines()[0]
-    await channel.send("**Here is our Week " + weekly_index + " Run Schedule:**")
+        weekly_index = int(index)
+    with open('weekly_index.txt', 'w') as f:
+        weekly_next_index = weekly_index + 1
+        weekly_next_index = str(weekly_next_index)
+        f.write(weekly_next_index)
+    await channel.send("**Here is our Week " + weekly_next_index + " Run Schedule:**")
     weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
     for index in range(len(weekly_runs)):
         run = weekly_runs[index]
@@ -171,7 +176,7 @@ async def ping(ctx):
             await channel.send("Weekly Index: " + f.readlines()[0])
     except:
         with open('weekly_index.txt', 'w') as f:
-            f.write("1")
+            f.write("0")
         with open('weekly_index.txt', 'r') as f:
             await channel.send("Weekly Index: " + f.readlines()[0])
 
