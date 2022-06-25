@@ -225,16 +225,16 @@ async def ping(ctx):
 async def ping(ctx):
     channel = bot.get_channel(990343297329397820)
     stored_runs = []
-    try:
-        with open('weekly_runs.txt', 'r') as f:
-            for index in range(5):
-                run = f.readlines()[index]
-                stored_runs.append(run)
-        with open('backup_weekly_runs.txt', 'w') as f:
-            for index in range(5):
-                run = f.readlines()[index]
-                f.write(run)
-        await channel.send("Backed up weekly runs.")
+    #try:
+    with open('weekly_runs.txt', 'r') as f:
+        for index in range(5):
+            run = f.readlines()[index]
+            stored_runs.append(run)
+    with open('backup_weekly_runs.txt', 'w') as f:
+        for index in range(5):
+            run = f.readlines()[index]
+            f.write(run)
+    await channel.send("Backed up weekly runs.")
     #except:
         #await channel.send("Error. Weekly runs have not been initialized.")
 
