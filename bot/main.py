@@ -185,3 +185,4 @@ async def ping(ctx):
 
 if __name__ == "__main__":
     bot.run(TOKEN)
+    channel = bot.get_channel(990343297329397820)
