@@ -222,8 +222,10 @@ async def ping(ctx):
 
 @bot.command(name="backup_weekly_runs")
 @commands.has_role("Officer")
-    async def ping(ctx):
-        stored_runs = []
+async def ping(ctx):
+    channel = bot.get_channel(990343297329397820)
+    stored_runs = []
+    try:
         with open('weekly_runs.txt', 'r') as f:
             for index in range(5):
                 run = f.readlines()[index]
@@ -233,11 +235,15 @@ async def ping(ctx):
                 run = f.readlines()[index]
                 f.write(run)
         await channel.send("Backed up weekly runs.")
+    except:
+        await channel.send("Error. Weekly runs have not been initialized.")
 
 @bot.command(name="use_backup_weekly_runs")
 @commands.has_role("Officer")
-    async def ping(ctx):
-        stored_runs = []
+async def ping(ctx):
+    channel = bot.get_channel(990343297329397820)
+    stored_runs = []
+    try:
         with open('backup_weekly_runs.txt', 'r') as f:
             for index in range(5):
                 run = f.readlines()[index]
@@ -247,6 +253,8 @@ async def ping(ctx):
                 run = f.readlines()[index]
                 f.write(run)
         await channel.send("Using backed up weekly runs.")
+    except:
+        await channel.send("Error. Weekly runs have not been initialized.")
 
 if __name__ == "__main__":
     bot.run(TOKEN)
