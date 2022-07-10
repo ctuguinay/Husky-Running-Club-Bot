@@ -4,7 +4,6 @@ from discord.ext import commands
 from run_selector import select_weekly_runs
 import pytest
 import argparse
-from dotenv import load_dotenv
 
 dict = {
 
@@ -65,6 +64,7 @@ args = parser.parse_args()
 mode = args.set_mode
 
 if mode == "locally":
+    from dotenv import load_dotenv
     load_dotenv()
 
 bot = commands.Bot(command_prefix="!")
