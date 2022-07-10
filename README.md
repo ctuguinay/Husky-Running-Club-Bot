@@ -1,11 +1,42 @@
-# Hosting your discord.py bot on Heroku
-### What are the prerequisites for this guide?
-You must have an account for Discord [[Link](https://discordapp.com/developers/applications/)], GitHub [[Link](https://github.com/join)] , and Heroku [[Link](https://signup.heroku.com/)].
+# Husky Running Club Bot
 
-### How do I create a bot and get a bot token?
+## First Step: How do I create a bot and get a bot token?
 * Create an application in the developer portal by clicking [here](https://discordapp.com/developers/applications/)
 * Open up your new application and click 'Add Bot' under the Bot settings to create your bot.
 * After creating the bot, click the 'Copy' button under the title Token. Take note of your token as you will need it later.
+
+## How to Host this Bot Locally
+
+* Make sure you have at LEAST Python 3.7.0.
+* Download the repository and navigate to the top of the repository.
+* Run the following to setup the environment:
+```
+pip install -r requirements
+```
+
+* Then navigate to the /bot folder: 
+```
+cd bot
+```
+
+* Create a .env file with the following:
+```
+DISCORD_TOKEN=$DISCORD_TOKEN
+ON_LOCAL=True
+```
+
+* Replace $DISCORD_TOKEN with your own Discord bot Token.
+
+* In the /bot folder, run the following to start the bot:
+```
+python main.py
+```
+
+
+
+## How to Host this Bot on Heroku
+### What are the prerequisites for this guide?
+You must have an account for Discord [[Link](https://discordapp.com/developers/applications/)], GitHub [[Link](https://github.com/join)] , and Heroku [[Link](https://signup.heroku.com/)].
 
 ### How to fork the repository and set it up to work with Heroku?
 * Fork a copy of this repository by clicking the 'Fork' on the upper right-hand.
@@ -23,7 +54,6 @@ You must have an account for Discord [[Link](https://discordapp.com/developers/a
   * Switch the worker from off to on.
   * Click 'Confirm' to finalize the decision.
   * NOTE: You are allocated 550 free Dyno hours, which will not last the entire month. However, if you provide a credit card to verify your identity, you are given an additional 450 hours, which will allow your bot to run indefinitely.
-
-# TO-DO LIST
-* Revise the tutorial to be easier to understand for any user.
-* Add some images for following along with the process.
+  
+## Todo:
+* Implement testing, with Pytest and either dpytest or another bot to read this bot's messages.
