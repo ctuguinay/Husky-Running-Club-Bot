@@ -261,7 +261,7 @@ async def ping(ctx):
 async def ping(ctx):
     channel = bot.get_channel(990343297329397820)
     await channel.send("Bot logging off.")
-    await bot.logout()
+    await bot.close()
 
 if __name__ == "__main__":
     bot.run(TOKEN)
