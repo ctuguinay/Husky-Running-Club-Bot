@@ -2,7 +2,6 @@ import discord
 from discord.ext import commands
 from scripts.run_selector import select_weekly_runs
 from scripts.set_dictionaries import set_dict, set_long_names
-from dotenv import load_dotenv
 import os
 
 
@@ -11,7 +10,6 @@ class MainCog(commands.Cog):
         self.bot = bot
         self.dict = set_dict()
         self.long_names = set_long_names()
-        load_dotenv()
         self.CHANNEL = int(os.getenv("CHANNEL"))
 
     @commands.command(name="initialize")
