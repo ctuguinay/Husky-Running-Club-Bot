@@ -1,11 +1,14 @@
 # Husky Running Club Bot
 
-## First Step: How do I create a bot and get a bot token?
+## What are the Prerequisites for Using this Repository?
+You must have an account for Discord [[Link](https://discordapp.com/developers/applications/)], GitHub [[Link](https://github.com/join)] , and Heroku [[Link](https://signup.heroku.com/)].
+
+## 1st Step: How do I create a bot and get a bot token?
 * Create an application in the developer portal by clicking [here](https://discordapp.com/developers/applications/)
 * Open up your new application and click 'Add Bot' under the Bot settings to create your bot.
 * After creating the bot, click the 'Copy' button under the title Token. Take note of your token as you will need it later.
 
-## How to Host this Bot Locally
+## 2nd Step: How to Host this Bot Locally
 
 * Make sure you have at LEAST Python 3.7.0.
 * Download the repository and navigate to the top of the repository.
@@ -34,11 +37,7 @@ CHANNEL=$CHANNEL
 python main.py --set_mode locally
 ```
 
-
-
-## How to Host this Bot on Heroku
-### What are the prerequisites for this guide?
-You must have an account for Discord [[Link](https://discordapp.com/developers/applications/)], GitHub [[Link](https://github.com/join)] , and Heroku [[Link](https://signup.heroku.com/)].
+## 3rd Step: How to Host this Bot on Heroku
 
 ### How to fork the repository and set it up to work with Heroku?
 * Fork a copy of this repository by clicking the 'Fork' on the upper right-hand.
