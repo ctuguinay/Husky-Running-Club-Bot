@@ -2,7 +2,9 @@ import os
 import discord
 from discord.ext import commands
 from run_selector import select_weekly_runs
-#from dotenv import load_dotenv
+import pytest
+import argparse
+from dotenv import load_dotenv
 
 dict = {
 
@@ -56,7 +58,15 @@ long_names = {
     'Magnuson Park': '//snippets.mapmycdn.com/routes/view/embedded/2865761827?width=600&height=400&&line_color=E60f0bdb&rgbhex=DB0B0E&distance_markers=0&unit_type=imperial&map_mode=ROADMAP&last_updated=2020-01-18T18:57:46-08:00'
 }
 
-#load_dotenv()
+# Parser to parse whether you are running through local or through Heroku
+parser = argparse.ArgumentParser(description='Parser for Husky Running Club Discord Bot.')
+parser.add_argument("--set_mode", help="Sets whether you are running locally or through heroku.", default="locally")
+args = parser.parse_args()
+mode = args.set_mode
+
+if mode == "locally":
+    load_dotenv()
+
 bot = commands.Bot(command_prefix="!")
 TOKEN = os.getenv("DISCORD_TOKEN")
 
@@ -245,6 +255,13 @@ async def ping(ctx):
         await channel.send("Using backedup weekly runs.")
     except:
         await channel.send("Error. Backup weekly runs have not been initialized.")
+
+@bot.command(name="shutdown")
+@commands.has_role("Officer")
+async def ping(ctx):
+    channel = bot.get_channel(990343297329397820)
+    await channel.send("Bot logging off.")
+    await bot.logout()
 
 if __name__ == "__main__":
     bot.run(TOKEN)
