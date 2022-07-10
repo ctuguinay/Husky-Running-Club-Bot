@@ -23,13 +23,15 @@ cd bot
 ```
 DISCORD_TOKEN=$DISCORD_TOKEN
 ON_LOCAL=True
+CHANNEL=$CHANNEL
 ```
 
 * Replace $DISCORD_TOKEN with your own Discord bot Token.
+* Replace $CHANNEL as your desired output channel's ID, which can be found by turning on Developer Mode in settings, right clicking your desired channel, and selecting the Copy ID option.
 
 * In the /bot folder, run the following to start the bot:
 ```
-python main.py
+python main.py --set_mode locally
 ```
 
 
