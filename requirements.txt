@@ -1,2 +1,2 @@
-discord.py==1.7.3
-pytest
+discord.py==1.7.3 # For the entire discord bot
+pytest==7.1.2 # For testing

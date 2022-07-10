@@ -12,7 +12,7 @@ class MainCog(commands.Cog):
 
     @commands.command(name="initialize")
     @commands.has_role("Officer")
-    async def ping(self, ctx):
+    async def initialize(self, ctx):
         channel = self.bot.get_channel(990343297329397820)
         with open('bot/weekly_index.txt', 'w') as f:
             f.write("0")
@@ -20,7 +20,7 @@ class MainCog(commands.Cog):
 
     @commands.command(name="weekly")
     @commands.has_role("Officer")
-    async def ping(self, ctx):
+    async def weekly(self, ctx):
         try:
             channel = self.bot.get_channel(990343297329397820)
             weekly_runs = select_weekly_runs()
@@ -57,7 +57,7 @@ class MainCog(commands.Cog):
 
     @commands.command(name="daily")
     @commands.has_role("Officer")
-    async def ping(self, ctx):
+    async def daily(self, ctx):
         channel = self.bot.get_channel(990343297329397820)
         try:
             with open('bot/weekday_index.txt', 'r') as f:
@@ -118,8 +118,8 @@ class MainCog(commands.Cog):
 
     @commands.command(name="weekly_index")
     @commands.has_role("Officer")
-    async def ping(self, ctx):
-        channel = bot.get_channel(990343297329397820)
+    async def weekly_index(self, ctx):
+        channel = self.bot.get_channel(990343297329397820)
         try:
             with open('bot/weekly_index.txt', 'r') as f:
                 await channel.send("Weekly Index: " + f.readlines()[0])
@@ -131,8 +131,8 @@ class MainCog(commands.Cog):
 
     @commands.command(name="weekday_index")
     @commands.has_role("Officer")
-    async def ping(self, ctx):
-        channel = bot.get_channel(990343297329397820)
+    async def weekday_index(self, ctx):
+        channel = self.bot.get_channel(990343297329397820)
         try:
             with open('bot/weekday_index.txt', 'r') as f:
                 await channel.send("Weekday Index: " + f.readlines()[0])
@@ -144,8 +144,8 @@ class MainCog(commands.Cog):
 
     @commands.command(name="set_weekly_index")
     @commands.has_role("Officer")
-    async def ping(self, ctx):
-        channel = bot.get_channel(990343297329397820)
+    async def set_weekly_index(self, ctx):
+        channel = self.bot.get_channel(990343297329397820)
         try:
             weekly_index = ctx.message.content.replace("!set_weekly_index ", "")
             with open('bot/weekly_index.txt', 'w') as f:
@@ -156,7 +156,7 @@ class MainCog(commands.Cog):
 
     @commands.command(name="set_weekday_index")
     @commands.has_role("Officer")
-    async def ping(self, ctx):
+    async def set_weekday_index(self, ctx):
         channel = self.bot.get_channel(990343297329397820)
         try:
             weekday_index = ctx.message.content.replace("!set_weekday_index ", "")
@@ -168,7 +168,7 @@ class MainCog(commands.Cog):
 
     @commands.command(name="backup_weekly_runs")
     @commands.has_role("Officer")
-    async def ping(self, ctx):
+    async def backup_weekly_runs(self, ctx):
         channel = self.bot.get_channel(990343297329397820)
         try:
             with open('bot/weekly_runs.txt', 'r') as f, open('bot/backup_weekly_runs.txt', 'w') as w:
@@ -181,7 +181,7 @@ class MainCog(commands.Cog):
 
     @commands.command(name="use_backup_weekly_runs")
     @commands.has_role("Officer")
-    async def ping(self, ctx):
+    async def use_backup_weekly_runs(self, ctx):
         channel = self.bot.get_channel(990343297329397820)
         try:
             with open('bot/backup_weekly_runs.txt', 'r') as f, open('bot/weekly_runs.txt', 'w') as w:
@@ -194,7 +194,7 @@ class MainCog(commands.Cog):
 
     @commands.command(name="shutdown")
     @commands.has_role("Officer")
-    async def ping(self, ctx):
+    async def shutdown(self, ctx):
         channel = self.bot.get_channel(990343297329397820)
         await channel.send("Bot logging off.")
         await self.bot.close()
