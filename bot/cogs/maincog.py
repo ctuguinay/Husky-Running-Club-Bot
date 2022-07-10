@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 from scripts.run_selector import select_weekly_runs
 from scripts.set_dictionaries import set_dict, set_long_names
+from dotenv import load_dotenv
+import os
 
 
 class MainCog(commands.Cog):
@@ -9,11 +11,13 @@ class MainCog(commands.Cog):
         self.bot = bot
         self.dict = set_dict()
         self.long_names = set_long_names()
+        load_dotenv()
+        self.CHANNEL = int(os.getenv("CHANNEL"))
 
     @commands.command(name="initialize")
     @commands.has_role("Officer")
     async def initialize(self, ctx):
-        channel = self.bot.get_channel(990343297329397820)
+        channel = self.bot.get_channel(self.CHANNEL)
         with open('bot/weekly_index.txt', 'w') as f:
             f.write("0")
         await channel.send("Initialized Quarter.")
@@ -22,7 +26,7 @@ class MainCog(commands.Cog):
     @commands.has_role("Officer")
     async def weekly(self, ctx):
         try:
-            channel = self.bot.get_channel(990343297329397820)
+            channel = self.bot.get_channel(self.CHANNEL)
             weekly_runs = select_weekly_runs()
             with open('bot/weekly_runs.txt', 'w') as f:
                 for index in range(len(weekly_runs)):
@@ -58,7 +62,7 @@ class MainCog(commands.Cog):
     @commands.command(name="daily")
     @commands.has_role("Officer")
     async def daily(self, ctx):
-        channel = self.bot.get_channel(990343297329397820)
+        channel = self.bot.get_channel(self.CHANNEL)
         try:
             with open('bot/weekday_index.txt', 'r') as f:
                 index = f.readlines()[0]
@@ -119,7 +123,7 @@ class MainCog(commands.Cog):
     @commands.command(name="weekly_index")
     @commands.has_role("Officer")
     async def weekly_index(self, ctx):
-        channel = self.bot.get_channel(990343297329397820)
+        channel = self.bot.get_channel(self.CHANNEL)
         try:
             with open('bot/weekly_index.txt', 'r') as f:
                 await channel.send("Weekly Index: " + f.readlines()[0])
@@ -132,7 +136,7 @@ class MainCog(commands.Cog):
     @commands.command(name="weekday_index")
     @commands.has_role("Officer")
     async def weekday_index(self, ctx):
-        channel = self.bot.get_channel(990343297329397820)
+        channel = self.bot.get_channel(self.CHANNEL)
         try:
             with open('bot/weekday_index.txt', 'r') as f:
                 await channel.send("Weekday Index: " + f.readlines()[0])
@@ -145,7 +149,7 @@ class MainCog(commands.Cog):
     @commands.command(name="set_weekly_index")
     @commands.has_role("Officer")
     async def set_weekly_index(self, ctx):
-        channel = self.bot.get_channel(990343297329397820)
+        channel = self.bot.get_channel(self.CHANNEL)
         try:
             weekly_index = ctx.message.content.replace("!set_weekly_index ", "")
             with open('bot/weekly_index.txt', 'w') as f:
@@ -157,7 +161,7 @@ class MainCog(commands.Cog):
     @commands.command(name="set_weekday_index")
     @commands.has_role("Officer")
     async def set_weekday_index(self, ctx):
-        channel = self.bot.get_channel(990343297329397820)
+        channel = self.bot.get_channel(self.CHANNEL)
         try:
             weekday_index = ctx.message.content.replace("!set_weekday_index ", "")
             with open('bot/weekday_index.txt', 'w') as f:
@@ -169,7 +173,7 @@ class MainCog(commands.Cog):
     @commands.command(name="backup_weekly_runs")
     @commands.has_role("Officer")
     async def backup_weekly_runs(self, ctx):
-        channel = self.bot.get_channel(990343297329397820)
+        channel = self.bot.get_channel(self.CHANNEL)
         try:
             with open('bot/weekly_runs.txt', 'r') as f, open('bot/backup_weekly_runs.txt', 'w') as w:
                 for index in range(5):
@@ -182,7 +186,7 @@ class MainCog(commands.Cog):
     @commands.command(name="use_backup_weekly_runs")
     @commands.has_role("Officer")
     async def use_backup_weekly_runs(self, ctx):
-        channel = self.bot.get_channel(990343297329397820)
+        channel = self.bot.get_channel(self.CHANNEL)
         try:
             with open('bot/backup_weekly_runs.txt', 'r') as f, open('bot/weekly_runs.txt', 'w') as w:
                 for index in range(5):
@@ -195,7 +199,7 @@ class MainCog(commands.Cog):
     @commands.command(name="shutdown")
     @commands.has_role("Officer")
     async def shutdown(self, ctx):
-        channel = self.bot.get_channel(990343297329397820)
+        channel = self.bot.get_channel(self.CHANNEL)
         await channel.send("Bot logging off.")
         await self.bot.close()
 

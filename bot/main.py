@@ -31,10 +31,12 @@ assert(mode == "locally" or mode == "heroku")
 
 bot = commands.Bot(command_prefix="!")
 TOKEN = os.getenv("DISCORD_TOKEN")
+CHANNEL = int(os.getenv("CHANNEL"))
+
 
 @bot.event
 async def on_ready():
-    channel = bot.get_channel(990343297329397820)
+    channel = bot.get_channel(CHANNEL)
     login_message = f"Logged in as {bot.user.name}."
     print(login_message)
     await channel.send(login_message)
